@@ -1,0 +1,38 @@
+---
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch: {}
+
+env:
+  CACHE_VERSION: v1
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-unknown-linux-musl # build static binaries
+      - uses: actions/cache@v2
+        with:
+          key: "${{ runner.os }}-rust-audit-${{ env.CACHE_VERSION }}-${{ github.sha }}"
+          restore-keys: |
+            ${{ runner.os }}-rust-audit-${{ env.CACHE_VERSION }}
+          path: |
+            ~/.cargo
+            ./target
+      # cargo install cargo-audit
+      - name: cargo install cargo-audit
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: cargo-audit
+      # cargo audit
+      - name: cargo audit
+        uses: actions-rs/cargo@v1
+        with:
+          command: audit
+          args: --ignore RUSTSEC-2020-0159 --ignore RUSTSEC-2020-0071
