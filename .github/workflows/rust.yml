@@ -67,7 +67,6 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - name: install system build dependencies
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
