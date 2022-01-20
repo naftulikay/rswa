@@ -1,18 +1,9 @@
 [package]
-name = "rswa"
+name = "rswa-web"
 version = "0.1.0"
 edition = "2021"
-repository = "https://github.com/naftulikay/rswa"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[workspace]
-members = [
-    "rswa-cli",
-    "rswa-web",
-]
 
 [dependencies]
-anyhow = "1.0"
-rswa-cli = { path = "./rswa-cli" }
-rswa-web = { path = "./rswa-web" }
 rocket = { version = "0.5.0-rc.1", features = ["json", "tls", "uuid"] }

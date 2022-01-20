@@ -21,7 +21,6 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: x86_64-unknown-linux-musl # build static binaries
       - uses: actions/cache@v2
         with:
           key: "${{ runner.os }}-rust-build-${{ env.CACHE_VERSION }}-${{ github.sha }}"
@@ -33,11 +32,36 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-      - name: cargo build --release --target x86_64-unknown-linux-musl
+      - name: cargo build --release
         uses: actions-rs/cargo@v1
         with:
           command: build
           args: --release
+
+  build-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-unknown-linux-musl # build static binaries
+      - uses: actions/cache@v2
+        with:
+          key: "${{ runner.os }}-rust-build-${{ env.CACHE_VERSION }}-${{ github.sha }}"
+          restore-keys: |
+            ${{ runner.os }}-rust-build-static-${{ env.CACHE_VERSION }}
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+      - name: cargo build --release --target x86_64-unknown-linux-musl
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --target x86_64-unknown-linux-musl
 
   test:
     runs-on: ubuntu-latest
