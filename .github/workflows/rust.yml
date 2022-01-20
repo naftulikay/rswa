@@ -43,7 +43,7 @@ jobs:
     steps:
       - run: sudo apt-get update && sudo apt-get install -y musl-dev musl-tools
         env:
-          - DEBIAN_FRONTEND=noninteractive
+          DEBIAN_FRONTEND: noninteractive
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
