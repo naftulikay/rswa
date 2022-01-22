@@ -7,12 +7,14 @@ repository = "https://github.com/naftulikay/rswa"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [workspace]
 members = [
+    "rswa-auth",
     "rswa-cli",
     "rswa-web",
 ]
 
 [dependencies]
 anyhow = "1.0"
+rswa-auth = { path = "./rswa-auth" }
 rswa-cli = { path = "./rswa-cli" }
 rswa-web = { path = "./rswa-web" }
 rocket = { version = "0.5.0-rc.1", features = ["json", "tls", "uuid"] }
