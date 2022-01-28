@@ -41,7 +41,7 @@ jobs:
   build-static:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y build-essential libssl-dev linux-libc-dev musl-dev musl-tools pkgconf
+      - run: sudo apt-get update && sudo apt-get install -y build-essential libssl-dev linux-libc-dev musl-dev musl-tools pkgconf zlib1g-dev curl zip
         env:
           DEBIAN_FRONTEND: noninteractive
       - uses: actions/checkout@v2
@@ -51,7 +51,7 @@ jobs:
           target: x86_64-unknown-linux-musl # build static binaries
       - uses: actions/cache@v2
         with:
-          key: "${{ runner.os }}-rust-build-${{ env.CACHE_VERSION }}-${{ github.sha }}"
+          key: "${{ runner.os }}-rust-build-static-${{ env.CACHE_VERSION }}-${{ github.sha }}"
           restore-keys: |
             ${{ runner.os }}-rust-build-static-${{ env.CACHE_VERSION }}
           path: |
